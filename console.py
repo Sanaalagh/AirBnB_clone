@@ -8,6 +8,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for the HBNB console."""
 
@@ -81,7 +82,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Update an instance based on the class name and id.
 
-        Usage: update <class_name> <instance_id> <attribute_name> "<attribute_value>"
+        Usage: update <class_name> <instance_id>
+        <attribute_name> "<attribute_value>"
         """
         args = arg.split()
         if not args:
@@ -110,7 +112,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Create a new instance of BaseModel, save it to JSON file and print its id.
+        Create a new instance of BaseModel,
+        save it to JSON file and print its id.
 
         Usage: create <class_name>
         """
@@ -166,8 +169,10 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
             return
-        count = sum(1 for obj in storage.all().values() if isinstance(obj, cls))
+        count = sum
+        (1 for obj in storage.all().values() if isinstance(obj, cls))
         print(count)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -2,6 +2,7 @@
 import unittest
 from models.place import Place
 
+
 class TestPlace(unittest.TestCase):
     """Test cases for the Place class."""
 
@@ -16,6 +17,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.name, "Cozy Cabin")
         self.assertEqual(place.city_id, "123")
         self.assertEqual(place.user_id, "456")
+
 
 if __name__ == '__main__':
     unittest.main()

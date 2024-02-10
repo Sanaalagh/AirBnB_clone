@@ -6,6 +6,7 @@ from console import HBNBCommand
 from models.base_model import BaseModel
 from models import storage
 
+
 class TestConsole(unittest.TestCase):
     """Test cases for console.py"""
 
@@ -75,9 +76,9 @@ class TestConsole(unittest.TestCase):
         """Test help command"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertFalse(self.console.onecmd("help"))
-            self.assertIn("Documented commands (type help <topic>):", f.getvalue())
+            self.assertIn(
+                    "Documented commands (type help <topic>):", f.getvalue())
 
-    # Add more test cases for other commands...
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
 
+
 class User(BaseModel):
     """User class that inherits from BaseModel"""
     email = ""
@@ -10,5 +11,5 @@ class User(BaseModel):
 
 
 def __init__(self, *args, **kwargs):
-        """Initialization method for User"""
-        super().__init__(*args, **kwargs)
+    """Initialization method for User"""
+    super().__init__(*args, **kwargs)

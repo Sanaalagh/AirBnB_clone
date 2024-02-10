@@ -2,6 +2,7 @@
 import unittest
 from models.amenity import Amenity
 
+
 class TestAmenity(unittest.TestCase):
     """Test cases for the Amenity class."""
 
@@ -14,6 +15,7 @@ class TestAmenity(unittest.TestCase):
         """Test setting attributes of Amenity instance."""
         amenity = Amenity(name="WiFi")
         self.assertEqual(amenity.name, "WiFi")
+
 
 if __name__ == '__main__':
     unittest.main()

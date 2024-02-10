@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
 
+
 class Review(BaseModel):
     """
     Review class
@@ -14,6 +15,6 @@ class Review(BaseModel):
     text = ""
 
 
-  def __init__(self, *args, **kwargs):
-        """Initialization method for Review"""
-        super().__init__(*args, **kwargs)
+def __init__(self, *args, **kwargs):
+    """Initialization method for Review"""
+    super().__init__(*args, **kwargs)
