@@ -19,6 +19,7 @@ classes = {
     'Review': Review
 }
 
+
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for the HBNB console."""
 
