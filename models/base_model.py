@@ -1,30 +1,38 @@
 #!/usr/bin/python3
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
     """BaseModel class for other classes to inherit from"""
 
     def __init__(self, *args, **kwargs):
-        """Initializes a new instance of BaseModel"""
+        """
+        initalisation of an object with it's
+        attributes
+        Args :
+                Args(won't be used ): list of arguments
+                Kwargs: pass in dictionary as arguments
+        """
         if kwargs:
-            for key, value in kwargs.items():
-                if key != "__class__":
-                    if key == "created_at" or key == "updated_at":
-                        setattr(self, key, datetime.strptime(
-                            value, "%Y-%m-%dT%H:%M:%S.%f"))
-                    else:
-                        setattr(self, key, value)
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            for key, v in kwargs.items():
+                if key != '__class__':
+                    setattr(self, key, v)
+                elif key in ('created_at', 'updated_at'):
+                    Nv = datetime.fromisoformat(v)
+                    setattr(self, key, Nv)
+            return
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+        models.storage.new(self)
 
     def save(self):
         """Updates the updated_at attribute
         with the current datetime"""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary representation

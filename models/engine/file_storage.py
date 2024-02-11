@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import json
-from os import path
+import os 
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -31,34 +31,46 @@ class FileStorage:
         FileStorage.__objects[key] = obj
 
     def save(self):
-        """Serializes __objects to the JSON file (path: __file_path)"""
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
-            obj_dict = {
-                    key: obj.to_dict()
-                    for key, obj in FileStorage.__objects.items()}
-            json.dump(obj_dict, file)
+        """
+        serializes __objects to the JSON file (path: __file_path)
+        """
+        with open(self.__file_path, 'w') as file:
+            serialized_objects = {}
+            for k, v in self.__objects.items():
+                if hasattr(v, 'to_dict') and callable(getattr(v, 'to_dict')):
+                    serialized_objects[k] = v.to_dict()
+                else:
+                    serialized_objects[k] = v
+            json.dump(serialized_objects, file)
 
     def reload(self):
-        """Deserializes the JSON file to __objects"""
-        try:
-            with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
-                obj_dict = json.load(file)
-                for key, val in obj_dict.items():
-                    cls_name = val['__class__']
-                    del val['__class__']
-                    cls = eval(cls_name)
-                    self.new(cls(**val))
-        except FileNotFoundError:
-            pass
+        """
+        deserializes the JSON file to __objects
+        """
+        current_classes = {
+            'BaseModel': BaseModel,
+            'User': User,
+            'Amenity': Amenity,
+            'City': City,
+            'State': State,
+            'Place': Place,
+            'Review': Review
+            }
 
-    def classes(self):
-        """Returns a dictionary of supported classes for serialization"""
-        return {
-            "BaseModel": BaseModel,
-            "User": User,
-            "State": State,
-            "City": City,
-            "Amenity": Amenity,
-            "Place": Place,
-            "Review": Review
-        }
+        if not os.path.exists(self.__file_path):
+            return
+
+        with open(self.__file_path, 'r') as file:
+            deserialized = None
+
+            try:
+                deserialized = json.load(file)
+            except json.JSONDecodeError:
+                pass
+
+            if deserialized is None:
+                return
+
+            self.__objects = {
+                k: current_classes[k.split('.')[0]](**v)
+                for k, v in deserialized.items()}

@@ -1,13 +1,23 @@
 #!/usr/bin/python3
 import cmd
-from models.engine import storage
+from models import storage
 from models.base_model import BaseModel
+# from models.base_model import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+classes = {
+    'BaseModel': BaseModel,
+    # 'User': User,
+    'Place': Place,
+    'State': State,
+    'City': City,
+    'Amenity': Amenity,
+    'Review': Review
+}
 
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for the HBNB console."""
@@ -62,21 +72,15 @@ class HBNBCommand(cmd.Cmd):
         Usage: all [<class_name>]
         """
         args = arg.split()
-        objs = []
-        if not arg:
-            for obj in storage.all().values():
-                objs.append(str(obj))
-            print(objs)
+        objs = storage.all()
+        if len(args) < 1:
+            print(["{}".format(v) for _, v in objs.items()])
             return
-        try:
-            cls = eval(args[0])
-        except NameError:
+        if args[0] not in classes.keys():
             print("** class doesn't exist **")
             return
-        for key, obj in storage.all().items():
-            if key.split('.')[0] == args[0]:
-                objs.append(str(obj))
-        print(objs)
+        else:
+            print(["{}".format(v) for _, v in objs.items()])
 
     def do_update(self, arg):
         """
@@ -112,22 +116,18 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Create a new instance of BaseModel,
-        save it to JSON file and print its id.
-
-        Usage: create <class_name>
+        create new instance
         """
-        if not arg:
+        args = arg.split(" ")
+        if len(args) == 0:
             print("** class name missing **")
             return
-        try:
-            cls = eval(arg)
-        except NameError:
+        if args[0] not in classes.keys():
             print("** class doesn't exist **")
-            return
-        obj = cls()
-        obj.save()
-        print(obj.id)
+        else:
+            new_instance = classes[args[0]]()
+            new_instance.save()
+            print(new_instance.id)
 
     def do_destroy(self, arg):
         """
