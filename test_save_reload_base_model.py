@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
-from models.engine import storage
 
 all_objs = storage.all()
 print("-- Reloaded objects --")

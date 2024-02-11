@@ -1,16 +1,13 @@
 #!/usr/bin/python3
+"""State module"""
+
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """
-    State class
-    Public class attributes:
-    name: string - empty string
-    """
+    """State class"""
     name = ""
 
-
-def __init__(self, *args, **kwargs):
-    """Initialization method for State"""
-    super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        """Initialization"""
+        super().__init__(*args, **kwargs)

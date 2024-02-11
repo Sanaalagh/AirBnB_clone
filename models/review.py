@@ -1,20 +1,15 @@
 #!/usr/bin/python3
+"""Review module"""
+
 from models.base_model import BaseModel
 
 
 class Review(BaseModel):
-    """
-    Review class
-    Public class attributes:
-    place_id: string - empty string: it will be the Place.id
-    user_id: string - empty string: it will be the User.id
-    text: string - empty string
-    """
+    """Review class"""
     place_id = ""
     user_id = ""
     text = ""
 
-
-def __init__(self, *args, **kwargs):
-    """Initialization method for Review"""
-    super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        """Initialization"""
+        super().__init__(*args, **kwargs)

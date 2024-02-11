@@ -1,16 +1,13 @@
 #!/usr/bin/python3
+"""Amenity module"""
+
 from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    """
-    Amenity class
-    Public class attributes:
-    name: string - empty string
-    """
+    """Amenity class"""
     name = ""
 
-
-def __init__(self, *args, **kwargs):
-    """Initialization method for Amenity"""
-    super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        """Initialization"""
+        super().__init__(*args, **kwargs)
